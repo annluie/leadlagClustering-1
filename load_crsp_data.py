@@ -6,7 +6,7 @@ import glob
 # Path to the 'Yearly' directory
 data_root = "Data/CRSP/Yearly"
 START_YEAR = 2000
-END_YEAR = 2016
+END_YEAR = 2021
 
 def load_gzipped_data(data_root):
     """
