@@ -6,7 +6,6 @@
 # Import dependencies
 ################
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 
 # %% [markdown]
@@ -44,7 +43,7 @@ def get_future_time(time, horizon):
     Returns:
     str: The future time as a string.
     """
-    return pd.to_datetime(time) + pd.Timedelta(days=horizon)
+    return (pd.to_datetime(time) + pd.tseries.offsets.BDay(horizon)).date()
 
 
 #################### Future returns ####################
@@ -221,5 +220,5 @@ def sharpe_ratio_annual(pnl_series, risk_free_rate=0.0):
 
 
 ## Cumulative Returns
-def cumulative_returns()
+#def cumulative_returns()
 
