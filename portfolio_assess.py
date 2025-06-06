@@ -32,6 +32,7 @@ def get_price(instrument, time, df):
     asset = df.loc((df['ticker'] == instrument) & (df['date'] == time))
     return asset['prevAdjclose'] if not asset.empty else None
 
+
 def get_future_time(time, horizon):
     """
     Get the future time based on the current time and a specified horizon.
@@ -46,7 +47,7 @@ def get_future_time(time, horizon):
     return pd.to_datetime(time) + pd.Timedelta(days=horizon)
 
 
-### Future returns
+#################### Future returns ####################
 def fret_log(instrument, time, horizon, df):
     """
     Calculate the future returns of an instrument over a specified time horizon.
@@ -57,7 +58,7 @@ def fret_log(instrument, time, horizon, df):
     future_time (str): The future time or date index.
     df (Dataframe) : Dataframe containing the historical prices of all instruments.
     Returns:
-    float: The calculated raw return for the instrument at the specified time and horizon.
+    float: The calculated log raw return for the instrument at the specified time and horizon.
     """
     p_current = get_price(instrument, time, df)
     future_time = get_future_time(time, horizon)
@@ -124,6 +125,7 @@ def fret_log_m_df(time, horizon, df):
 # %% [markdown]
 # ## PnL and Sharpe Ratio
 # 
+
 
 # %%
 ### PnL returns
@@ -218,5 +220,6 @@ def sharpe_ratio_annual(pnl_series, risk_free_rate=0.0):
     return excess_returns.mean() / excess_returns.std() * np.sqrt(252) if excess_returns.std() != 0 else np.nan
 
 
-
+## Cumulative Returns
+def cumulative_returns()
 
