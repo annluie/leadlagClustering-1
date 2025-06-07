@@ -31,19 +31,39 @@ def get_price(instrument, time, df):
     asset = df.loc((df['ticker'] == instrument) & (df['date'] == time))
     return asset['prevAdjclose'] if not asset.empty else None
 
-
-def get_future_time(time, horizon):
+def get_time_index(time, df):
     """
-    Get the future time based on the current time and a specified horizon.
+    Get the index of the specified time in the dataframe.
     
     Parameters:
     time (str): The current time or date index.
-    horizon (int): The number of days into the future to look.
+    df (Dataframe) : Dataframe containing the historical prices of all instruments.
     
     Returns:
-    str: The future time as a string.
+    int: The index of the specified time in the dataframe.
     """
-    return (pd.to_datetime(time) + pd.tseries.offsets.BDay(horizon)).date()
+    return df.index[df['date'] == time].tolist()[0] if not df[df['date'] == time].empty else None
+
+def get_future_time(df, start_date, horizon):
+    # Get sorted unique trading dates as datetime
+    trading_dates = pd.to_datetime(df['date'].unique())
+    trading_dates = trading_dates.sort_values().reset_index(drop=True)
+    
+    # Convert start_date to Timestamp for comparison
+    start_date = pd.to_datetime(start_date)
+    
+    # Find the index of the first trading date >= start_date
+    idx = trading_dates.searchsorted(start_date)
+    
+    # Calculate future index
+    future_idx = idx + horizon
+    
+    if future_idx >= len(trading_dates):
+        raise ValueError("Horizon goes beyond available trading dates.")
+    
+    # Return the future date as string (or Timestamp if you prefer)
+    return trading_dates[future_idx].strftime('%Y-%m-%d')
+
 
 
 #################### Future returns ####################

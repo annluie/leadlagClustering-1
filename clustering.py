@@ -109,7 +109,7 @@ def run_sponge_clustering_window(df, start_date, end_date, threshold=0.3, k=5):
     # Find the index of start_date and go one day earlier
     start_idx = unique_dates[unique_dates >= pd.to_datetime(start_date)].index[0]
     adjusted_start_date = unique_dates[max(0, start_idx - 1)]
-
+    #adjusted_start_date = unique_dates[max(0, start_idx)]
     # Filter data between the two dates
     #mask = (df['date'] >= adjusted_start_date) & (df['date'] <= pd.to_datetime(end_date))
     #window_df = df[mask]
